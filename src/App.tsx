@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import LogoImage from './logo.svg'
 
+const END_DATE = new Date('2019-09-01T00:30:00.000Z').getTime()
+
 let frameId: any
 
 function paddingNumber(num: number) {
@@ -19,11 +21,13 @@ const App: React.FC = () => {
 
   const awaitRequestFrameAndUpdateCount = useCallback(() => {
     frameId = requestAnimationFrame(() => {
-      const date = new Date()
+      const remainMilliseconds = END_DATE - new Date().getTime()
 
-      setHour(paddingNumber(date.getHours()))
-      setMinute(paddingNumber(date.getMinutes()))
-      setSecond(paddingNumber(date.getSeconds()))
+      const date = new Date(remainMilliseconds)
+
+      setHour(paddingNumber(date.getUTCHours()))
+      setMinute(paddingNumber(date.getUTCMinutes()))
+      setSecond(paddingNumber(date.getUTCSeconds()))
 
       return awaitRequestFrameAndUpdateCount()
     })
@@ -39,6 +43,9 @@ const App: React.FC = () => {
     <div className='App'>
       <div className='App-Logo'>
         <img src={LogoImage} alt='logo' />
+      </div>
+      <div className='App-Clock-Caption'>
+        남은시간
       </div>
       <div className='App-Clock'>
         {hour}:{minute}:{second}
