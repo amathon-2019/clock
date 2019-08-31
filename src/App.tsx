@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
-import LogoImage from './Logo.svg'
+import LogoImage from './logo.svg'
 
 let frameId: any
 
